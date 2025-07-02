@@ -1,0 +1,401 @@
+'use client';
+
+import React, { useState } from 'react';
+import { ArrowUp, ArrowDown, TrendingUp, Info, ChevronDown, ChevronUp } from 'lucide-react';
+
+type TrendData = {
+  date: string;
+  value: number;
+};
+
+type ToolTrend = {
+  id: string;
+  name: string;
+  category: string;
+  currentRank: number;
+  previousRank: number;
+  growthRate: number;
+  searchVolume: TrendData[];
+  userCount: TrendData[];
+};
+
+type TrendAnalysisProps = {
+  trends: ToolTrend[];
+  timeRange: '7d' | '30d' | '90d' | '1y';
+  onTimeRangeChange?: (range: '7d' | '30d' | '90d' | '1y') => void;
+  className?: string;
+};
+
+export default function TrendAnalysis({
+  trends,
+  timeRange = '30d',
+  onTimeRangeChange,
+  className = ''
+}: TrendAnalysisProps) {
+  const [sortBy, setSortBy] = useState<'rank' | 'growth'>('rank');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
+  const [expandedTool, setExpandedTool] = useState<string | null>(null);
+  
+  // 切换排序方式
+  const toggleSort = (field: 'rank' | 'growth') => {
+    if (sortBy === field) {
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(field);
+      setSortOrder('asc');
+    }
+  };
+  
+  // 切换工具展开/折叠状态
+  const toggleToolExpand = (toolId: string) => {
+    setExpandedTool(prev => prev === toolId ? null : toolId);
+  };
+  
+  // 排序工具
+  const sortedTrends = [...trends].sort((a, b) => {
+    if (sortBy === 'rank') {
+      return sortOrder === 'asc' 
+        ? a.currentRank - b.currentRank 
+        : b.currentRank - a.currentRank;
+    } else {
+      return sortOrder === 'asc' 
+        ? a.growthRate - b.growthRate 
+        : b.growthRate - a.growthRate;
+    }
+  });
+  
+  // 获取排名变化图标和样式
+  const getRankChange = (current: number, previous: number) => {
+    const diff = previous - current;
+    
+    if (diff > 0) {
+      return {
+        icon: <ArrowUp size={14} className="text-green-500" />,
+        text: `上升 ${diff} 位`,
+        class: 'text-green-500'
+      };
+    } else if (diff < 0) {
+      return {
+        icon: <ArrowDown size={14} className="text-red-500" />,
+        text: `下降 ${Math.abs(diff)} 位`,
+        class: 'text-red-500'
+      };
+    } else {
+      return {
+        icon: <span className="w-3.5 h-0.5 bg-yellow-500 inline-block"></span>,
+        text: '维持不变',
+        class: 'text-yellow-500'
+      };
+    }
+  };
+  
+  // 格式化增长率
+  const formatGrowthRate = (rate: number) => {
+    const formattedRate = (rate * 100).toFixed(1);
+    return `${formattedRate}%`;
+  };
+  
+  // 绘制迷你趋势图
+  const renderMiniChart = (data: TrendData[]) => {
+    if (!data || data.length === 0) return null;
+    
+    const values = data.map(d => d.value);
+    const max = Math.max(...values);
+    const min = Math.min(...values);
+    const range = max - min || 1; // 避免除以零
+    
+    const points = data.map((d, i) => {
+      const x = (i / (data.length - 1)) * 100;
+      const y = 100 - ((d.value - min) / range) * 100;
+      return `${x},${y}`;
+    }).join(' ');
+    
+    // 确定趋势线颜色
+    const firstValue = data[0].value;
+    const lastValue = data[data.length - 1].value;
+    const trendColor = lastValue > firstValue ? '#10b981' : lastValue < firstValue ? '#ef4444' : '#eab308';
+    
+    return (
+      <svg width="100" height="40" viewBox="0 0 100 100" preserveAspectRatio="none" className="overflow-visible">
+        <polyline
+          points={points}
+          fill="none"
+          stroke={trendColor}
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+  };
+  
+  // 绘制详细趋势图
+  const renderDetailChart = (data: TrendData[]) => {
+    if (!data || data.length === 0) return null;
+    
+    const values = data.map(d => d.value);
+    const max = Math.max(...values);
+    const min = Math.min(...values);
+    const range = max - min || 1; // 避免除以零
+    
+    const points = data.map((d, i) => {
+      const x = (i / (data.length - 1)) * 100;
+      const y = 100 - ((d.value - min) / range) * 100;
+      return `${x},${y}`;
+    }).join(' ');
+    
+    // 确定趋势线颜色
+    const firstValue = data[0].value;
+    const lastValue = data[data.length - 1].value;
+    const trendColor = lastValue > firstValue ? '#10b981' : lastValue < firstValue ? '#ef4444' : '#eab308';
+    
+    // 计算增长率
+    const growthRate = firstValue === 0 ? 0 : (lastValue - firstValue) / firstValue;
+    const formattedGrowth = formatGrowthRate(growthRate);
+    
+    return (
+      <div className="mt-4">
+        <div className="flex justify-between items-center mb-2">
+          <div className="text-sm text-neutral-400">
+            {data[0].date} - {data[data.length - 1].date}
+          </div>
+          <div className={`text-sm ${growthRate > 0 ? 'text-green-500' : growthRate < 0 ? 'text-red-500' : 'text-yellow-500'}`}>
+            {growthRate > 0 ? '+' : ''}{formattedGrowth}
+          </div>
+        </div>
+        
+        <div className="relative h-40 w-full">
+          <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none">
+            {/* 背景网格线 */}
+            <line x1="0" y1="0" x2="100" y2="0" stroke="#374151" strokeWidth="0.5" strokeDasharray="2" />
+            <line x1="0" y1="25" x2="100" y2="25" stroke="#374151" strokeWidth="0.5" strokeDasharray="2" />
+            <line x1="0" y1="50" x2="100" y2="50" stroke="#374151" strokeWidth="0.5" strokeDasharray="2" />
+            <line x1="0" y1="75" x2="100" y2="75" stroke="#374151" strokeWidth="0.5" strokeDasharray="2" />
+            <line x1="0" y1="100" x2="100" y2="100" stroke="#374151" strokeWidth="0.5" strokeDasharray="2" />
+            
+            {/* 趋势线 */}
+            <polyline
+              points={points}
+              fill="none"
+              stroke={trendColor}
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            
+            {/* 趋势线下方的渐变填充 */}
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor={trendColor} stopOpacity="0.3" />
+              <stop offset="100%" stopColor={trendColor} stopOpacity="0" />
+            </linearGradient>
+            <polygon
+              points={`0,100 ${points} 100,100`}
+              fill="url(#gradient)"
+            />
+          </svg>
+          
+          {/* 数据点标记 */}
+          <div className="absolute inset-0 flex justify-between">
+            {data.map((d, i) => {
+              const y = 100 - ((d.value - min) / range) * 100;
+              return (
+                <div key={i} className="relative h-full flex items-center" style={{ width: '1px' }}>
+                  <div 
+                    className="absolute w-1.5 h-1.5 rounded-full bg-white border-2"
+                    style={{ 
+                      borderColor: trendColor,
+                      top: `${y}%`,
+                      transform: 'translate(-50%, -50%)'
+                    }}
+                  ></div>
+                </div>
+              );
+            })}
+          </div>
+          
+          {/* Y轴标签 */}
+          <div className="absolute left-0 inset-y-0 flex flex-col justify-between pointer-events-none">
+            <div className="text-xs text-neutral-500">{max.toLocaleString()}</div>
+            <div className="text-xs text-neutral-500">{((max + min) / 2).toLocaleString()}</div>
+            <div className="text-xs text-neutral-500">{min.toLocaleString()}</div>
+          </div>
+        </div>
+        
+        {/* X轴标签 */}
+        <div className="flex justify-between mt-1">
+          {data.map((d, i) => (
+            <div key={i} className="text-xs text-neutral-500">
+              {i === 0 || i === data.length - 1 || i === Math.floor(data.length / 2) 
+                ? new Date(d.date).toLocaleDateString('zh-CN', { month: 'short', day: 'numeric' })
+                : ''}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div className={`bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden ${className}`}>
+      <div className="p-6 border-b border-neutral-800">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <TrendingUp size={20} className="text-blue-400 mr-2" />
+            <h2 className="text-xl font-bold text-white">AI工具趋势分析</h2>
+          </div>
+          
+          {/* 时间范围选择器 */}
+          <div className="flex bg-neutral-800 rounded-lg overflow-hidden">
+            {(['7d', '30d', '90d', '1y'] as const).map(range => (
+              <button
+                key={range}
+                onClick={() => onTimeRangeChange && onTimeRangeChange(range)}
+                className={`px-3 py-1.5 text-sm ${timeRange === range ? 'bg-blue-600 text-white' : 'text-neutral-400 hover:text-white'}`}
+              >
+                {range}
+              </button>
+            ))}
+          </div>
+        </div>
+        
+        <p className="text-neutral-400 text-sm mt-2">
+          基于搜索量和用户数据的AI工具流行趋势分析
+        </p>
+      </div>
+      
+      {/* 趋势表格 */}
+      <div className="overflow-x-auto">
+        <table className="w-full">
+          <thead>
+            <tr className="bg-neutral-800/50">
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">
+                工具名称
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">
+                分类
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider cursor-pointer"
+                onClick={() => toggleSort('rank')}
+              >
+                <div className="flex items-center">
+                  当前排名
+                  {sortBy === 'rank' && (
+                    sortOrder === 'asc' ? <ChevronUp size={14} className="ml-1" /> : <ChevronDown size={14} className="ml-1" />
+                  )}
+                </div>
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">
+                排名变化
+              </th>
+              <th 
+                className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider cursor-pointer"
+                onClick={() => toggleSort('growth')}
+              >
+                <div className="flex items-center">
+                  增长率
+                  {sortBy === 'growth' && (
+                    sortOrder === 'asc' ? <ChevronUp size={14} className="ml-1" /> : <ChevronDown size={14} className="ml-1" />
+                  )}
+                </div>
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">
+                搜索趋势
+              </th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-neutral-400 uppercase tracking-wider">
+                用户趋势
+              </th>
+            </tr>
+          </thead>
+          
+          <tbody className="divide-y divide-neutral-800">
+            {sortedTrends.map(tool => (
+              <React.Fragment key={tool.id}>
+                <tr 
+                  className={`hover:bg-neutral-800/30 cursor-pointer ${expandedTool === tool.id ? 'bg-neutral-800/20' : ''}`}
+                  onClick={() => toggleToolExpand(tool.id)}
+                >
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center">
+                      <div className="text-sm font-medium text-white">{tool.name}</div>
+                      {expandedTool === tool.id ? (
+                        <ChevronUp size={16} className="ml-2 text-neutral-400" />
+                      ) : (
+                        <ChevronDown size={16} className="ml-2 text-neutral-400" />
+                      )}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-neutral-400">{tool.category}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="text-sm text-white">#{tool.currentRank}</div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="flex items-center text-sm">
+                      {getRankChange(tool.currentRank, tool.previousRank).icon}
+                      <span className={`ml-1 ${getRankChange(tool.currentRank, tool.previousRank).class}`}>
+                        {getRankChange(tool.currentRank, tool.previousRank).text}
+                      </span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className={`text-sm ${tool.growthRate > 0 ? 'text-green-500' : tool.growthRate < 0 ? 'text-red-500' : 'text-yellow-500'}`}>
+                      {tool.growthRate > 0 ? '+' : ''}{formatGrowthRate(tool.growthRate)}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="w-24">
+                      {renderMiniChart(tool.searchVolume)}
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <div className="w-24">
+                      {renderMiniChart(tool.userCount)}
+                    </div>
+                  </td>
+                </tr>
+                
+                {/* 展开的详细信息 */}
+                {expandedTool === tool.id && (
+                  <tr>
+                    <td colSpan={7} className="px-6 py-4 bg-neutral-800/10">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                          <h4 className="text-white font-medium mb-2 flex items-center">
+                            <span className="mr-2">搜索量趋势</span>
+                            <Info size={14} className="text-neutral-500 cursor-help" />
+                          </h4>
+                          {renderDetailChart(tool.searchVolume)}
+                        </div>
+                        
+                        <div>
+                          <h4 className="text-white font-medium mb-2 flex items-center">
+                            <span className="mr-2">用户数趋势</span>
+                            <Info size={14} className="text-neutral-500 cursor-help" />
+                          </h4>
+                          {renderDetailChart(tool.userCount)}
+                        </div>
+                      </div>
+                      
+                      <div className="mt-4 text-sm text-neutral-500">
+                        <p>
+                          {tool.name} 在过去 {timeRange} 内的增长率为 {formatGrowthRate(tool.growthRate)}，
+                          排名从 #{tool.previousRank} {tool.previousRank > tool.currentRank ? '上升' : tool.previousRank < tool.currentRank ? '下降' : '保持'} 到 #{tool.currentRank}。
+                        </p>
+                      </div>
+                    </td>
+                  </tr>
+                )}
+              </React.Fragment>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      
+      <div className="p-4 border-t border-neutral-800 bg-neutral-800/30 text-xs text-neutral-500">
+        数据更新于 {new Date().toLocaleDateString('zh-CN')} · 趋势分析基于用户搜索量和活跃度
+      </div>
+    </div>
+  );
+}
