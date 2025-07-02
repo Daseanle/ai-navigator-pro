@@ -138,7 +138,7 @@ export default function SearchPage() {
                       <>
                         <ToolCard
                           key={tool.id}
-                          id={tool.id.toString()}
+                          id={tool.id}
                           slug={tool.slug}
                           name={tool.name}
                           tagline={tool.tagline}
@@ -165,7 +165,7 @@ export default function SearchPage() {
                   return (
                     <ToolCard
                       key={tool.id}
-                      id={tool.id.toString()}
+                      id={tool.id}
                       slug={tool.slug}
                       name={tool.name}
                       tagline={tool.tagline}
