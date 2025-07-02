@@ -900,11 +900,9 @@ async function getCategories() {
   );
 }
 
-// SEO 元数据已移至 metadata.ts 文件
 'use client';
 
 import { useState } from 'react';
-// 移除这行: import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function ApiDocsPage() {
   const [activeTab, setActiveTab] = useState<'introduction' | 'authentication' | 'endpoints' | 'examples'>('introduction');
