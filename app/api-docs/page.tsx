@@ -1,15 +1,29 @@
 'use client';
 
 import { useState } from 'react';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
+// 移除这行: import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 export default function ApiDocsPage() {
   const [activeTab, setActiveTab] = useState<'introduction' | 'authentication' | 'endpoints' | 'examples'>('introduction');
   const [copiedEndpoint, setCopiedEndpoint] = useState<string | null>(null);
 
-  const handleCopy = (endpoint: string) => {
-    setCopiedEndpoint(endpoint);
-    setTimeout(() => setCopiedEndpoint(null), 2000);
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedEndpoint(text);
+      setTimeout(() => setCopiedEndpoint(null), 2000);
+    } catch (error) {
+      console.error('复制失败:', error);
+      // 降级处理
+      const textArea = document.createElement('textarea');
+      textArea.value = text;
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      setCopiedEndpoint(text);
+      setTimeout(() => setCopiedEndpoint(null), 2000);
+    }
   };
 
   return (
