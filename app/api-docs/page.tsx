@@ -1277,24 +1277,19 @@ export default function ApiDocsPage() {
                           "代码生成和调试",
                           "内容创作辅助"
                         ],
-                        "rating": 4.8,
-                        "reviews_count": 1250,
-                        "created_at": "2023-01-15T00:00:00Z",
-                        "updated_at": "2023-11-20T00:00:00Z"
-                      }
-                    }, null, 2)}
-                  </pre>
-                </div>
-              </div>
-              
-              {/* 搜索工具 */}
+                                      {/* 搜索工具 */}
               <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
                 <div className="flex items-center justify-between p-4 border-b border-neutral-800">
                   <div className="flex items-center">
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools/search</code>
                   </div>
-
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tools/search')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tools/search' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">搜索 AI 工具。</p>
@@ -1345,7 +1340,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/categories</code>
                   </div>
-
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/categories')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/categories' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具类别。</p>
@@ -1368,7 +1368,7 @@ export default function ApiDocsPage() {
                           "slug": "image-generation",
                           "description": "AI 图像生成和编辑工具",
                           "tools_count": 38
-                        },
+                        }
                         // 更多类别...
                       ]
                     }, null, 2)}
@@ -1383,7 +1383,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/categories/{'{slug}'}/tools</code>
                   </div>
-
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/categories/{slug}/tools')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/categories/{slug}/tools' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取特定类别下的所有 AI 工具。</p>
@@ -1427,10 +1432,80 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tags</code>
                   </div>
-
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tags')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tags' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具标签。</p>
                   
                   <h4 className="text-lg font-semibold text-white mt-6 mb-2">响应示例</h4>
-                  <pre className="bg-neutral-800 p-3 rounded text-green-400 overflow-x-auto
+                  <pre className="bg-neutral-800 p-3 rounded text-green-400 overflow-x-auto">
+                    {JSON.stringify({
+                      "status": "success",
+                      "data": [
+                        {
+                          "id": "1",
+                          "name": "AI 助手",
+                          "slug": "ai-assistant",
+                          "tools_count": 25
+                        },
+                        {
+                          "id": "2",
+                          "name": "自然语言处理",
+                          "slug": "nlp",
+                          "tools_count": 18
+                        }
+                        // 更多标签...
+                      ]
+                    }, null, 2)}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
+      
+      {/* 示例代码 */}
+      {activeTab === 'examples' && (
+        <div className="space-y-8">
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-4">示例代码</h2>
+            <p className="text-neutral-300 mb-6">以下是使用不同编程语言调用我们API的示例。</p>
+            
+            {/* JavaScript 示例 */}
+            <div className="mb-8">
+              <h3 className="text-xl font-semibold text-white mb-4">JavaScript (Node.js)</h3>
+              <pre className="bg-neutral-800 p-4 rounded text-green-400 overflow-x-auto">
+                {`const axios = require('axios');
+
+const apiKey = 'your_api_key_here';
+const baseURL = 'https://api.ainavigatorpro.com/v1';
+
+// 获取所有工具
+async function getAllTools() {
+  try {
+    const response = await axios.get(\`\${baseURL}/tools\`, {
+      headers: {
+        'X-API-Key': apiKey
+      }
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.error('Error:', error.response.data);
+  }
+}
+
+getAllTools();`}
+              </pre>
+            </div>
+          </section>
+        </div>
+      )}
+    </div>
+  );
+}
