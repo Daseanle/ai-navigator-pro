@@ -44,12 +44,15 @@ export default function ProfilePage() {
       if (error) {
         console.error('Error fetching bookmarks:', error);
       } else if (bookmarks) {
-        // 提取工具数据
-        const tools = bookmarks
+        // 提取工具数据并扁平化数组
+        const toolsArray = bookmarks
           .map(bookmark => bookmark.tools)
-          .filter(Boolean) as SavedTool[];
+          .filter(Boolean);
+          
+        // 将二维数组扁平化为一维数组
+        const flattenedTools = toolsArray.flat() as SavedTool[];
         
-        setSavedTools(tools);
+        setSavedTools(flattenedTools);
       }
       
       setLoading(false);

@@ -40,8 +40,18 @@ export async function POST(request: NextRequest) {
     
     try {
       // 执行批量SEO优化
+      // 将 contentTypes 数组转换为单个类型，如果有多个类型，只使用第一个
+      let contentType: 'category' | 'blog' | 'page' | 'tool' | undefined = undefined;
+      
+      if (requestData.contentTypes && requestData.contentTypes.length > 0) {
+        const type = requestData.contentTypes[0];
+        if (type === 'category' || type === 'blog' || type === 'page' || type === 'tool') {
+          contentType = type;
+        }
+      }
+      
       const result = await runSeoOptimization(
-        requestData.contentTypes,
+        contentType,
         requestData.limit || 5
       );
       

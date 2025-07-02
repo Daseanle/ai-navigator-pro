@@ -24,8 +24,11 @@ export async function generateStaticParams() {
     .from('categories')
     .select('slug');
 
-  return (categories || []).map((category) => ({
-    category: category.slug,
+  // 返回一个 Promise 数组，符合 Next.js 15 的要求
+  return Promise.all((categories || []).map(async (category) => {
+    return {
+      category: category.slug,
+    };
   }));
 }
 
@@ -70,14 +73,18 @@ async function getCategoryTools(categorySlug: string): Promise<Tool[]> {
 }
 
 // --- 页面组件 ---
-export default async function CategoryPage({ params }: { params: { category: string } }) {
-  const category = await getCategoryInfo(params.category);
+export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+  // 等待 params 解析完成
+  const resolvedParams = await params;
+  const categorySlug = resolvedParams.category;
+  
+  const category = await getCategoryInfo(categorySlug);
   
   if (!category) {
     notFound();
   }
   
-  const tools = await getCategoryTools(params.category);
+  const tools = await getCategoryTools(categorySlug);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-12">
@@ -113,9 +120,10 @@ export default async function CategoryPage({ params }: { params: { category: str
 }
 
 // --- SEO 元数据 ---
-export async function generateMetadata({ params }: { params: { category: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
   // 确保在使用 params.category 之前正确地等待它
-  const categorySlug = params.category;
+  const resolvedParams = await params;
+  const categorySlug = resolvedParams.category;
   const category = await getCategoryInfo(categorySlug);
   
   if (!category) {

@@ -38,6 +38,7 @@ function CommentForm({ toolId, user, addOptimisticComment }: {
       content: content.trim(),
       created_at: new Date().toISOString(),
       user_id: user.id,
+      tool_id: toolId, // 添加必需的 tool_id 字段
       profiles: { // 乐观地使用当前用户信息
         id: user.id,
         username: user.email?.split('@')[0] || '你',
@@ -86,32 +87,49 @@ function CommentList({ comments }: { comments: CommentType[] }) {
     return <p className="text-neutral-400 mt-4">暂无评论，快来抢沙发！</p>;
   }
 
+  // 辅助函数，从 profiles 中获取用户名
+  const getUsernameFromProfiles = (profiles: any): string => {
+    if (!profiles) return '匿名用户';
+    
+    // 如果 profiles 是数组，取第一个元素
+    if (Array.isArray(profiles)) {
+      return profiles[0]?.username || '匿名用户';
+    }
+    
+    // 如果 profiles 是对象，直接获取 username
+    return profiles.username || '匿名用户';
+  };
+
   return (
     <div className="space-y-6 mt-6">
-      {comments.map((comment) => (
-        <div key={comment.id} className="flex items-start gap-4">
-          <div className="w-10 h-10 rounded-full bg-neutral-700 flex-shrink-0 flex items-center justify-center font-bold text-white">
-            {comment.profiles?.username?.charAt(0).toUpperCase() || 'U'}
-          </div>
-          <div className="flex-grow">
-            <div className="flex items-center gap-2">
-              <span className="font-semibold text-white">
-                {comment.profiles?.username || '匿名用户'}
-              </span>
-              <span className="text-xs text-neutral-500">
-                {new Date(comment.created_at).toLocaleString()}
-              </span>
+      {comments.map((comment) => {
+        const username = getUsernameFromProfiles(comment.profiles);
+        
+        return (
+          <div key={comment.id} className="flex items-start gap-4">
+            <div className="w-10 h-10 rounded-full bg-neutral-700 flex-shrink-0 flex items-center justify-center font-bold text-white">
+              {username.charAt(0).toUpperCase() || 'U'}
             </div>
-            <p className="text-neutral-300 mt-1">{comment.content}</p>
+            <div className="flex-grow">
+              <div className="flex items-center gap-2">
+                <span className="font-semibold text-white">
+                  {username}
+                </span>
+                <span className="text-xs text-neutral-500">
+                  {new Date(comment.created_at).toLocaleString()}
+                </span>
+              </div>
+              <p className="text-neutral-300 mt-1">{comment.content}</p>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
 
 // --- 页面主组件 ---
-export default function ToolDetailPage({ params }: { params: { slug: string } }) {
+export default function ToolDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const [tool, setTool] = useState<ToolDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
@@ -137,6 +155,10 @@ export default function ToolDetailPage({ params }: { params: { slug: string } })
     // 获取工具数据
     async function getToolData() {
       setLoading(true);
+      // 解析 params Promise 获取 slug
+      const resolvedParams = await params;
+      const toolSlug = resolvedParams.slug;
+      
       const { data, error } = await supabase
         .from('tools')
         .select(`
@@ -145,7 +167,7 @@ export default function ToolDetailPage({ params }: { params: { slug: string } })
           tags ( name ),
           comments ( id, content, created_at, user_id, profiles ( id, username ) )
         `)
-        .eq('slug', params.slug)
+        .eq('slug', toolSlug)
         .order('created_at', { referencedTable: 'comments', ascending: false })
         .single();
 
@@ -217,7 +239,7 @@ export default function ToolDetailPage({ params }: { params: { slug: string } })
 
     return () => subscription.unsubscribe();
 
-  }, [params.slug, supabase]);
+  }, [params, supabase]);
 
   // 处理点赞
   const handleUpvote = async () => {

@@ -878,9 +878,9 @@ export default function SeoAutomationPage() {
                 <textarea
                   defaultValue={currentTemplate?.template || ''}
                   className="w-full bg-neutral-800 border border-neutral-700 rounded-lg py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-mono h-64"
-                  placeholder="# {{title}}\n\n## 介绍\n\n## 主要内容\n\n## 总结"
+                  placeholder="# {'{{'} title {'}}'} \n\n## 介绍\n\n## 主要内容\n\n## 总结"
                 ></textarea>
-                <p className="text-xs text-neutral-500 mt-1">使用 {{变量名}} 语法添加动态内容变量</p>
+                <p className="text-xs text-neutral-500 mt-1">使用 {'{{'} 变量名 {'}}' } 语法添加动态内容变量</p>
               </div>
               
               <div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { supabase } from '@/lib/supabaseClient';
-import { Tool, Category, Tag, Comment } from '@/types';
+import { ToolDetail, Category, Tag, Comment } from '@/types';
 
 // 定义数据库表类型
 type TableType = 'tools' | 'categories' | 'tags' | 'comments';

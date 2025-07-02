@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useSearchParams } from 'next/navigation';
 import ToolCard from '@/components/ToolCard';
-import { Search, Filter, X, Tag, ArrowUpDown, ArrowDown, ArrowUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Search, Filter, ChevronDown } from 'lucide-react';
 import type { ToolDetail } from '@/types';
 
 export default function ToolsPage() {

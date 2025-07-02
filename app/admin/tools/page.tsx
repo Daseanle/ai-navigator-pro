@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { ArrowRight, RefreshCw, Star, Settings, Tool, Zap, BarChart2, Loader2 } from 'lucide-react';
+import { ArrowRight, RefreshCw, Star, Settings, Wrench, Zap, BarChart2, Loader2 } from 'lucide-react';
 
 export default function ToolsManagementPage() {
   const [isLoading, setIsLoading] = useState(true);
@@ -77,7 +77,7 @@ export default function ToolsManagementPage() {
         <StatCard 
           title="总工具数" 
           value={stats.totalTools} 
-          icon={<Tool className="h-5 w-5 text-blue-500" />}
+          icon={<Wrench className="h-5 w-5 text-blue-500" />}
           bgColor="bg-blue-500/10"
           borderColor="border-blue-500/20"
           textColor="text-blue-500"
@@ -204,7 +204,16 @@ export default function ToolsManagementPage() {
 }
 
 // 统计卡片组件
-function StatCard({ title, value, icon, bgColor, borderColor, textColor }) {
+type StatCardProps = {
+  title: string;
+  value: string | number;
+  icon: React.ReactNode;
+  bgColor: string;
+  borderColor: string;
+  textColor: string;
+};
+
+function StatCard({ title, value, icon, bgColor, borderColor, textColor }: StatCardProps) {
   return (
     <div className={`${bgColor} ${borderColor} border rounded-xl p-6 shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-105 hover:translate-y-[-5px]`}>
       <div className="flex justify-between items-center mb-4">
@@ -219,7 +228,17 @@ function StatCard({ title, value, icon, bgColor, borderColor, textColor }) {
 }
 
 // 功能卡片组件
-function FunctionCard({ title, description, icon, bgColor, borderColor, linkHref, stats }) {
+type FunctionCardProps = {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  bgColor: string;
+  borderColor: string;
+  linkHref: string;
+  stats: Array<{ label: string; value: string }>;
+};
+
+function FunctionCard({ title, description, icon, bgColor, borderColor, linkHref, stats }: FunctionCardProps) {
   return (
     <div className={`border ${borderColor} rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 transform hover:scale-[1.02]`}>
       <div className={`bg-gradient-to-br ${bgColor} p-6`}>
@@ -254,7 +273,15 @@ function FunctionCard({ title, description, icon, bgColor, borderColor, linkHref
 }
 
 // 快速链接卡片组件
-function QuickLinkCard({ title, description, icon, href, color }) {
+type QuickLinkCardProps = {
+  title: string;
+  description: string;
+  icon: React.ReactNode;
+  href: string;
+  color: 'blue' | 'pink' | 'amber' | 'indigo';
+};
+
+function QuickLinkCard({ title, description, icon, href, color }: QuickLinkCardProps) {
   const colorMap = {
     blue: "hover:border-blue-500/30 hover:bg-blue-900/10",
     pink: "hover:border-pink-500/30 hover:bg-pink-900/10",

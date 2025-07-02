@@ -1,6 +1,7 @@
 import './globals.css';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+// 暂时注释掉 Inter 字体导入，以避免构建时的网络问题
+// import { Inter } from 'next/font/google';
 import AppHeader from '@/components/AppHeader';
 import AppFooter from '@/components/AppFooter';
 
@@ -8,7 +9,8 @@ import AppFooter from '@/components/AppFooter';
 import { startToolSyncService } from '@/lib/toolSyncService';
 import { initReviewService } from '@/lib/reviewService';
 
-const inter = Inter({ subsets: ['latin'] });
+// 暂时注释掉 Inter 字体配置
+// const inter = Inter({ subsets: ['latin'] });
 
 // 在服务器端启动服务
 if (typeof window === 'undefined') {
@@ -41,7 +43,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
-      <body className={`${inter.className} bg-black text-white min-h-screen flex flex-col`}>
+      <body className={`bg-black text-white min-h-screen flex flex-col`}>
         <AppHeader />
         <main className="flex-grow">{children}</main>
         <AppFooter />

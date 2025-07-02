@@ -20,17 +20,18 @@ export interface Comment {
   content: string;
   created_at: string;
   user_id: string;
-  tool_id: number;
+  tool_id?: number; // 设为可选，因为从 Supabase 查询返回的数据可能不包含此字段
   // 通过 Supabase 关联查询时，可以嵌套 profiles 信息
-  profiles?: Profile;
+  // profiles 可能是单个对象或数组，取决于 Supabase 查询的结果
+  profiles?: Profile | Profile[] | { id: any; username: any; };
 }
 
 // 深度评测
 export interface Review {
-  id: number;
-  conclusion: string;
-  pros: string;
-  cons: string;
+  id?: number; // 设为可选，因为从 Supabase 查询返回的数据可能不包含此字段
+  conclusion?: string; // 设为可选，因为从 Supabase 查询返回的数据可能不包含此字段
+  pros?: string; // 设为可选，因为从 Supabase 查询返回的数据可能不包含此字段
+  cons?: string; // 设为可选，因为从 Supabase 查询返回的数据可能不包含此字段
   score_overall: number;
   // ... 其他您 reviews 表中的评分字段
 }
@@ -61,6 +62,7 @@ export interface ToolDetail {
   pricing: 'Free' | 'Freemium' | 'Paid' | 'Contact for pricing' | null;
   has_api: boolean;
   upvotes_count: number;
+  created_at?: string;
   // 关联的数据
   reviews: Review[];
   tags: Pick<Tag, 'name'>[]; // 只选择 name 字段

@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
+import Link from 'next/link';
 import { Clock, Users, Star, BookOpen, CheckCircle, Play, Download, Award } from 'lucide-react';
 import CourseReviews from '@/components/CourseReviews';
 import RelatedCourses from '@/components/RelatedCourses';

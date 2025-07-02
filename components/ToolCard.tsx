@@ -1,3 +1,5 @@
+'use client';
+
 import { Star, Bookmark } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
@@ -5,7 +7,7 @@ import { toggleBookmark } from '@/lib/actions';
 
 // --- 类型定义 ---
 type ToolCardProps = {
-  id?: string;
+  id?: number; // 改为 number 类型，与数据库 ID 类型一致
   slug: string;
   name: string;
   tagline?: string;
@@ -47,7 +49,7 @@ export default function ToolCard({
           .from('bookmarks')
           .select('id')
           .eq('user_id', user.id)
-          .eq('tool_id', id)
+          .eq('tool_id', id) // id 现在是 number 类型，与数据库匹配
           .maybeSingle();
         
         setIsBookmarked(!!data);
@@ -80,7 +82,7 @@ export default function ToolCard({
       // 乐观更新UI
       setIsBookmarked(!isBookmarked);
       
-      // 调用收藏/取消收藏的Server Action
+      // 调用收藏/取消收藏的Server Action - id 现在是 number 类型
       const result = await toggleBookmark(id, isBookmarked);
       setMessage(result.message);
       

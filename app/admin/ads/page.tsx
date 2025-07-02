@@ -273,7 +273,8 @@ export default function AdsManagementPage() {
 
   // 处理广告状态切换
   const toggleAdStatus = (ad: Advertisement) => {
-    const newStatus = ad.status === 'active' ? 'paused' : 'active';
+    // 确保 newStatus 是 Advertisement['status'] 类型
+    const newStatus: Advertisement['status'] = ad.status === 'active' ? 'paused' : 'active';
     // 实际应用中应该调用API更新状态
     const updatedAds = ads.map(item => 
       item.id === ad.id ? { ...item, status: newStatus, updatedAt: new Date() } : item

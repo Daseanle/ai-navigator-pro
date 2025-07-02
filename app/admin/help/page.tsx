@@ -144,7 +144,7 @@ export default function HelpPage() {
                 <li>在「SEO自动化」页面，切换到「内容模板」标签</li>
                 <li>点击「创建模板」按钮</li>
                 <li>填写模板名称、目标类型、关键词等信息</li>
-                <li>编写模板内容，使用 {{变量名}} 语法添加动态内容</li>
+                <li>编写模板内容，使用 {'{{'} 变量名 {'}}' } 语法添加动态内容</li>
                 <li>设置生成频率和状态</li>
                 <li>点击「创建模板」保存</li>
               </ol>
@@ -152,10 +152,10 @@ export default function HelpPage() {
             <li>
               <span className="font-medium text-white">模板变量</span>：
               <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>{{title}} - 自动生成的标题</li>
-                <li>{{keyword}} - 主要关键词</li>
-                <li>{{date}} - 当前日期</li>
-                <li>{{summary}} - 自动生成的内容摘要</li>
+                <li>{'{{'} title {'}}' } - 自动生成的标题</li>
+                <li>{'{{'} keyword {'}}' } - 主要关键词</li>
+                <li>{'{{'} date {'}}' } - 当前日期</li>
+                <li>{'{{'} summary {'}}' } - 自动生成的内容摘要</li>
               </ul>
             </li>
           </ul>

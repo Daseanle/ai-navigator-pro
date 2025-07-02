@@ -135,7 +135,7 @@ export default function ShowcasePage() {
       pricing: {
         free: true,
         freeTrial: false,
-        startingPrice: null,
+        startingPrice: undefined,
         hasPremium: false
       },
       rating: 4.4,
