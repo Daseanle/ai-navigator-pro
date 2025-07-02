@@ -634,7 +634,7 @@ export default function ToolsPage() {
                 {paginatedTools.map(tool => (
                   <div key={tool.id}>
                     <ToolCard 
-                      id={tool.id?.toString()}
+                      id={tool.id}
                       slug={tool.slug || ''}
                       name={tool.name || ''}
                       tagline={tool.tagline || ''}
