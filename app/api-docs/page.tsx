@@ -485,7 +485,7 @@ export default function ApiDocsPage() {
                           "slug": "image-generation",
                           "description": "AI 图像生成和编辑工具",
                           "tools_count": 38
-                        },
+                        }
                         // 更多类别...
                       ]
                     }, null, 2)}
@@ -566,16 +566,16 @@ export default function ApiDocsPage() {
                       "data": [
                         {
                           "id": "1",
-                          "name": "自然语言处理",
-                          "slug": "nlp",
-                          "tools_count": 78
+                          "name": "AI 助手",
+                          "slug": "ai-assistant",
+                          "tools_count": 25
                         },
                         {
                           "id": "2",
-                          "name": "内容创作",
-                          "slug": "content-creation",
-                          "tools_count": 64
-                        },
+                          "name": "自然语言处理",
+                          "slug": "nlp",
+                          "tools_count": 18
+                        }
                         // 更多标签...
                       ]
                     }, null, 2)}
@@ -1128,7 +1128,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools</code>
                   </div>
-
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tools')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tools' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具的列表。支持分页、排序和筛选。</p>
@@ -1224,7 +1229,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools/{'{slug}'}</code>
                   </div>
-
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tools/{slug}')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tools/{slug}' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取特定 AI 工具的详细信息。</p>
@@ -1277,7 +1287,17 @@ export default function ApiDocsPage() {
                           "代码生成和调试",
                           "内容创作辅助"
                         ],
-                                      {/* 搜索工具 */}
+                        "rating": 4.8,
+                        "reviews_count": 1250,
+                        "created_at": "2023-01-15T00:00:00Z",
+                        "updated_at": "2023-11-20T00:00:00Z"
+                      }
+                    }, null, 2)}
+                  </pre>
+                </div>
+              </div>
+              
+              {/* 搜索工具 */}
               <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
                 <div className="flex items-center justify-between p-4 border-b border-neutral-800">
                   <div className="flex items-center">
@@ -1472,35 +1492,294 @@ export default function ApiDocsPage() {
       
       {/* 示例代码 */}
       {activeTab === 'examples' && (
-        <div className="space-y-8">
+        <div className="space-y-10">
           <section>
-            <h2 className="text-2xl font-bold text-white mb-4">示例代码</h2>
-            <p className="text-neutral-300 mb-6">以下是使用不同编程语言调用我们API的示例。</p>
+            <h2 className="text-2xl font-bold text-white mb-6">使用示例</h2>
             
-            {/* JavaScript 示例 */}
-            <div className="mb-8">
-              <h3 className="text-xl font-semibold text-white mb-4">JavaScript (Node.js)</h3>
-              <pre className="bg-neutral-800 p-4 rounded text-green-400 overflow-x-auto">
-                {`const axios = require('axios');
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* JavaScript 示例 */}
+              <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
+                <div className="p-4 border-b border-neutral-800">
+                  <h3 className="text-xl font-semibold text-white">JavaScript (Fetch)</h3>
+                </div>
+                <div className="p-4">
+                  <pre className="bg-neutral-800 p-3 rounded text-green-400 overflow-x-auto">
+                    {`// 获取所有工具
+const fetchTools = async () => {
+  try {
+    const response = await fetch(
+      'https://api.ainavigatorpro.com/v1/tools',
+      {
+        headers: {
+          'X-API-Key': 'YOUR_API_KEY'
+        }
+      }
+    );
+    
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error('Error fetching tools:', error);
+  }
+};
 
-const apiKey = 'your_api_key_here';
-const baseURL = 'https://api.ainavigatorpro.com/v1';
+// 搜索工具
+const searchTools = async (query) => {
+  try {
+    const response = await fetch(
+      \`https://api.ainavigatorpro.com/v1/tools/search?q=\${encodeURIComponent(query)}\`,
+      {
+        headers: {
+          'X-API-Key': 'YOUR_API_KEY'
+        }
+      }
+    );
+    
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error('Error searching tools:', error);
+  }
+};`}
+                  </pre>
+                </div>
+              </div>
+              
+              {/* Python 示例 */}
+              <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
+                <div className="p-4 border-b border-neutral-800">
+                  <h3 className="text-xl font-semibold text-white">Python (Requests)</h3>
+                </div>
+                <div className="p-4">
+                  <pre className="bg-neutral-800 p-3 rounded text-green-400 overflow-x-auto">
+                    {`import requests
+
+# API 配置
+API_KEY = 'YOUR_API_KEY'
+BASE_URL = 'https://api.ainavigatorpro.com/v1'
+HEADERS = {
+    'X-API-Key': API_KEY
+}
+
+# 获取所有工具
+def get_tools(page=1, limit=20):
+    try:
+        response = requests.get(
+            f'{BASE_URL}/tools',
+            headers=HEADERS,
+            params={
+                'page': page,
+                'limit': limit
+            }
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f'Error fetching tools: {e}')
+        return None
+
+# 获取特定工具
+def get_tool(slug):
+    try:
+        response = requests.get(
+            f'{BASE_URL}/tools/{slug}',
+            headers=HEADERS
+        )
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f'Error fetching tool: {e}')
+        return None`}
+                  </pre>
+                </div>
+              </div>
+              
+              {/* PHP 示例 */}
+              <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
+                <div className="p-4 border-b border-neutral-800">
+                  <h3 className="text-xl font-semibold text-white">PHP (cURL)</h3>
+                </div>
+                <div className="p-4">
+                  <pre className="bg-neutral-800 p-3 rounded text-green-400 overflow-x-auto">
+                    {`<?php
+// API 配置
+$apiKey = 'YOUR_API_KEY';
+$baseUrl = 'https://api.ainavigatorpro.com/v1';
 
 // 获取所有工具
-async function getAllTools() {
+function getTools($page = 1, $limit = 20) {
+    global $apiKey, $baseUrl;
+    
+    $url = $baseUrl . '/tools?page=' . $page . '&limit=' . $limit;
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'X-API-Key: ' . $apiKey
+    ]);
+    
+    $response = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+    
+    if ($error) {
+        echo 'Error fetching tools: ' . $error;
+        return null;
+    }
+    
+    return json_decode($response, true);
+}
+
+// 获取特定类别下的工具
+function getCategoryTools($categorySlug, $page = 1, $limit = 20) {
+    global $apiKey, $baseUrl;
+    
+    $url = $baseUrl . '/categories/' . $categorySlug . '/tools?page=' . $page . '&limit=' . $limit;
+    
+    $ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, $url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'X-API-Key: ' . $apiKey
+    ]);
+    
+    $response = curl_exec($ch);
+    $error = curl_error($ch);
+    curl_close($ch);
+    
+    if ($error) {
+        echo 'Error fetching category tools: ' . $error;
+        return null;
+    }
+    
+    return json_decode($response, true);
+}
+?>`}
+                  </pre>
+                </div>
+              </div>
+              
+              {/* Node.js 示例 */}
+              <div className="bg-neutral-900 border border-neutral-800 rounded-xl overflow-hidden">
+                <div className="p-4 border-b border-neutral-800">
+                  <h3 className="text-xl font-semibold text-white">Node.js (Axios)</h3>
+                </div>
+                <div className="p-4">
+                  <pre className="bg-neutral-800 p-3 rounded text-green-400 overflow-x-auto">
+                    {`const axios = require('axios');
+
+// API 配置
+const API_KEY = 'YOUR_API_KEY';
+const BASE_URL = 'https://api.ainavigatorpro.com/v1';
+
+// 创建 axios 实例
+const api = axios.create({
+  baseURL: BASE_URL,
+  headers: {
+    'X-API-Key': API_KEY
+  }
+});
+
+// 获取所有工具
+async function getTools(page = 1, limit = 20) {
   try {
-    const response = await axios.get(\`\${baseURL}/tools\`, {
-      headers: {
-        'X-API-Key': apiKey
-      }
+    const response = await api.get('/tools', {
+      params: { page, limit }
     });
-    console.log(response.data);
+    return response.data;
   } catch (error) {
-    console.error('Error:', error.response.data);
+    console.error('Error fetching tools:', error.message);
+    throw error;
   }
 }
 
-getAllTools();`}
+// 搜索工具
+async function searchTools(query, page = 1, limit = 20) {
+  try {
+    const response = await api.get('/tools/search', {
+      params: { q: query, page, limit }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error searching tools:', error.message);
+    throw error;
+  }
+}
+
+// 获取所有类别
+async function getCategories() {
+  try {
+    const response = await api.get('/categories');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching categories:', error.message);
+    throw error;
+  }
+}`}
+                  </pre>
+                </div>
+              </div>
+            </div>
+          </section>
+          
+          <section>
+            <h2 className="text-2xl font-bold text-white mb-6">错误处理</h2>
+            <div className="bg-neutral-900 border border-neutral-800 rounded-xl p-6">
+              <p className="text-neutral-300 mb-4">
+                API 可能返回以下错误响应：
+              </p>
+              
+              <div className="overflow-x-auto">
+                <table className="w-full border-collapse">
+                  <thead>
+                    <tr className="bg-neutral-800">
+                      <th className="p-2 text-left text-neutral-300 border-b border-neutral-700">状态码</th>
+                      <th className="p-2 text-left text-neutral-300 border-b border-neutral-700">错误类型</th>
+                      <th className="p-2 text-left text-neutral-300 border-b border-neutral-700">描述</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="p-2 border-b border-neutral-800 text-white">400</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-400">Bad Request</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-300">请求参数无效</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border-b border-neutral-800 text-white">401</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-400">Unauthorized</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-300">API 密钥无效或缺失</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border-b border-neutral-800 text-white">404</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-400">Not Found</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-300">请求的资源不存在</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 border-b border-neutral-800 text-white">429</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-400">Too Many Requests</td>
+                      <td className="p-2 border-b border-neutral-800 text-neutral-300">超过 API 请求限制</td>
+                    </tr>
+                    <tr>
+                      <td className="p-2 text-white">500</td>
+                      <td className="p-2 text-neutral-400">Internal Server Error</td>
+                      <td className="p-2 text-neutral-300">服务器内部错误</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              
+              <h4 className="text-lg font-semibold text-white mt-6 mb-2">错误响应示例</h4>
+              <pre className="bg-neutral-800 p-3 rounded text-green-400 overflow-x-auto">
+                {JSON.stringify({
+                  "status": "error",
+                  "error": {
+                    "code": "invalid_api_key",
+                    "message": "提供的 API 密钥无效或已过期"
+                  }
+                }, null, 2)}
               </pre>
             </div>
           </section>
