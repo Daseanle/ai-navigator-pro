@@ -225,11 +225,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tools" onCopy={() => handleCopy('tools')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'tools' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tools')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tools' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具的列表。支持分页、排序和筛选。</p>
@@ -325,11 +326,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools/{'{slug}'}</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tools/{slug}" onCopy={() => handleCopy('tool')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'tool' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tools/{slug}')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tools/{slug}' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取特定 AI 工具的详细信息。</p>
@@ -399,11 +401,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools/search</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tools/search" onCopy={() => handleCopy('search')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'search' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tools/search')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tools/search' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">搜索 AI 工具。</p>
@@ -454,11 +457,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/categories</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/categories" onCopy={() => handleCopy('categories')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'categories' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/categories')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/categories' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具类别。</p>
@@ -496,11 +500,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/categories/{'{slug}'}/tools</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/categories/{slug}/tools" onCopy={() => handleCopy('category-tools')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'category-tools' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/categories/{slug}/tools')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/categories/{slug}/tools' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取特定类别下的所有 AI 工具。</p>
@@ -544,11 +549,12 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tags</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tags" onCopy={() => handleCopy('tags')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'tags' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+                  <button 
+                    className="text-neutral-400 hover:text-white"
+                    onClick={() => handleCopy('https://api.ainavigatorpro.com/v1/tags')}
+                  >
+                    {copiedEndpoint === 'https://api.ainavigatorpro.com/v1/tags' ? '已复制!' : '复制'}
+                  </button>
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具标签。</p>
@@ -1122,11 +1128,7 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tools" onCopy={() => handleCopy('tools')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'tools' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具的列表。支持分页、排序和筛选。</p>
@@ -1222,11 +1224,7 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools/{'{slug}'}</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tools/{slug}" onCopy={() => handleCopy('tool')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'tool' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取特定 AI 工具的详细信息。</p>
@@ -1296,11 +1294,7 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tools/search</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tools/search" onCopy={() => handleCopy('search')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'search' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">搜索 AI 工具。</p>
@@ -1351,11 +1345,7 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/categories</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/categories" onCopy={() => handleCopy('categories')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'categories' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具类别。</p>
@@ -1393,11 +1383,7 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/categories/{'{slug}'}/tools</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/categories/{slug}/tools" onCopy={() => handleCopy('category-tools')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'category-tools' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取特定类别下的所有 AI 工具。</p>
@@ -1441,11 +1427,7 @@ export default function ApiDocsPage() {
                     <span className="px-2 py-1 text-xs font-medium bg-green-900 text-green-400 rounded mr-3">GET</span>
                     <code className="text-white">/tags</code>
                   </div>
-                  <CopyToClipboard text="https://api.ainavigatorpro.com/v1/tags" onCopy={() => handleCopy('tags')}>
-                    <button className="text-neutral-400 hover:text-white">
-                      {copiedEndpoint === 'tags' ? '已复制!' : '复制'}
-                    </button>
-                  </CopyToClipboard>
+
                 </div>
                 <div className="p-4">
                   <p className="text-neutral-300 mb-4">获取所有 AI 工具标签。</p>
