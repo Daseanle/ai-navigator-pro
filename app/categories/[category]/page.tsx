@@ -105,7 +105,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           {tools.map(tool => (
             <ToolCard
               key={tool.id}
-              id={tool.id.toString()}
+              id={tool.id}  // 删除 .toString()
               slug={tool.slug}
               name={tool.name}
               tagline={tool.tagline}
