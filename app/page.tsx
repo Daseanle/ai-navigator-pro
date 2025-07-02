@@ -71,7 +71,7 @@ export default async function HomePage() {
           {hotTools.map(tool => (
             <ToolCard 
               key={tool.slug}
-              id={tool.id?.toString()}
+              id={tool.id}
               slug={tool.slug}
               name={tool.name}
               tagline={tool.tagline}
