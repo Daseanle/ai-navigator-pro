@@ -20,32 +20,34 @@ type Category = {
 
 // --- 获取所有分类 ---
 export async function generateStaticParams() {
-  const { data: categories } = await supabase
-    .from('categories')
-    .select('slug');
+  // 使用与CategoryList相同的分类数据
+  const categories = [
+    { slug: 'chatbots' },
+    { slug: 'image-generation' },
+    { slug: 'text-processing' },
+    { slug: 'code-assistants' },
+    { slug: 'audio-processing' },
+    { slug: 'video-generation' },
+  ];
 
-  // 返回一个 Promise 数组，符合 Next.js 15 的要求
-  return Promise.all((categories || []).map(async (category) => {
-    return {
-      category: category.slug,
-    };
+  return categories.map((category) => ({
+    category: category.slug,
   }));
 }
 
 // --- 获取分类信息 ---
 async function getCategoryInfo(slug: string): Promise<Category | null> {
-  const { data, error } = await supabase
-    .from('categories')
-    .select('name, slug, description')
-    .eq('slug', slug)
-    .single();
+  // 使用模拟数据，与CategoryList保持一致
+  const mockCategories = {
+    'chatbots': { name: '聊天机器人', slug: 'chatbots', description: '智能对话和聊天机器人工具' },
+    'image-generation': { name: '图像生成', slug: 'image-generation', description: 'AI图像生成和编辑工具' },
+    'text-processing': { name: '文本处理', slug: 'text-processing', description: '文本分析和处理工具' },
+    'code-assistants': { name: '代码助手', slug: 'code-assistants', description: '编程和代码生成助手' },
+    'audio-processing': { name: '音频处理', slug: 'audio-processing', description: '音频生成和编辑工具' },
+    'video-generation': { name: '视频生成', slug: 'video-generation', description: '视频生成和编辑工具' },
+  };
 
-  if (error || !data) {
-    console.error('Error fetching category:', error);
-    return null;
-  }
-
-  return data as Category;
+  return mockCategories[slug as keyof typeof mockCategories] || null;
 }
 
 // --- 获取分类下的工具 ---
@@ -121,7 +123,6 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
 // --- SEO 元数据 ---
 export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
-  // 确保在使用 params.category 之前正确地等待它
   const resolvedParams = await params;
   const categorySlug = resolvedParams.category;
   const category = await getCategoryInfo(categorySlug);
