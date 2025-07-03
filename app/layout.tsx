@@ -1,40 +1,27 @@
-import './globals.css';
-import type { Metadata } from 'next';
-// 暂时注释掉 Inter 字体导入，以避免构建时的网络问题
-// import { Inter } from 'next/font/google';
-import AppHeader from '@/components/AppHeader';
-import AppFooter from '@/components/AppFooter';
+import './globals.css'
+import { Inter } from 'next/font/google'
+import AppHeader from '@/components/AppHeader'
+import AppFooter from '@/components/AppFooter'
+import PWAInstaller from '@/components/PWAInstaller'
+import MobileNavigation from '@/components/MobileNavigation'
 
-// 仅在服务器端导入
-import { startToolSyncService } from '@/lib/toolSyncService';
-import { initReviewService } from '@/lib/reviewService';
+const inter = Inter({ subsets: ['latin'] })
 
-// 暂时注释掉 Inter 字体配置
-// const inter = Inter({ subsets: ['latin'] });
-
-// 在服务器端启动服务
-if (typeof window === 'undefined') {
-  try {
-    // 使用 setTimeout 确保在应用启动后再执行，避免阻塞渲染
-    setTimeout(() => {
-      // 启动工具同步服务
-      startToolSyncService().catch(err => {
-        console.error('启动工具同步服务失败:', err);
-      });
-      
-      // 启动工具评测服务
-      initReviewService();
-    }, 5000); // 延迟5秒启动
-  } catch (error) {
-    console.error('初始化后台服务失败:', error);
-  }
+// 分离 metadata 和 viewport
+export const metadata = {
+  title: 'AI Navigator Pro',
+  description: '专业的AI工具导航平台',
+  manifest: '/manifest.json'
 }
 
-export const metadata: Metadata = {
-  title: 'AI Navigator Pro - 发现最佳AI工具',
-  description: '探索、比较和学习如何使用最新的AI工具和资源',
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
-};
+// 新的 viewport 导出
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: '#3b82f6'
+}
 
 export default function RootLayout({
   children,
@@ -42,12 +29,37 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="zh-CN">
-      <body className={`bg-black text-white min-h-screen flex flex-col`}>
-        <AppHeader />
-        <main className="flex-grow">{children}</main>
-        <AppFooter />
+    <html lang="zh">
+      <head>
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="AI Navigator" />
+        <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
+      </head>
+      <body className={inter.className}>
+        <div className="min-h-screen flex flex-col">
+          {/* 桌面端导航 */}
+          <div className="hidden lg:block">
+            <AppHeader />
+          </div>
+          
+          {/* 移动端导航 */}
+          <MobileNavigation />
+          
+          {/* 主要内容区域 */}
+          <main className="flex-1 pt-16 lg:pt-0 pb-16 lg:pb-0">
+            {children}
+          </main>
+          
+          {/* 桌面端页脚 */}
+          <div className="hidden lg:block">
+            <AppFooter />
+          </div>
+        </div>
+        
+        {/* PWA 安装提示 */}
+        <PWAInstaller />
       </body>
     </html>
-  );
+  )
 }

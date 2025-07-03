@@ -72,9 +72,23 @@ export default function HelpPage() {
             AI Navigator Pro 需要使用各种API密钥来启用高级功能，特别是SEO内容自动生成功能。
           </p>
           
-          <h3 className="text-lg font-medium text-white mt-4">OpenAI API密钥</h3>
-          <p>
-            OpenAI API密钥用于生成SEO内容和其他AI辅助功能。
+          <h3 className="text-lg font-medium text-white mt-4">OpenRouter API密钥</h3>
+          <p className="text-gray-300 mt-2">
+            OpenRouter API密钥用于生成SEO内容和其他AI辅助功能。
+          </p>
+          
+          <h4 className="text-md font-medium text-white mt-3">获取API密钥：</h4>
+          <ol className="list-decimal list-inside text-gray-300 mt-2 space-y-1">
+            <li>访问 <a href="https://openrouter.ai" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">OpenRouter平台</a> 并创建账户</li>
+            <li>登录后，前往API密钥页面</li>
+            <li>点击"创建新密钥"按钮</li>
+            <li>为密钥设置一个描述性名称</li>
+            <li>复制生成的API密钥（以 sk-or- 开头）</li>
+          </ol>
+          
+          <h4 className="text-md font-medium text-white mt-3">配置密钥：</h4>
+          <p className="text-gray-300 mt-2">
+            在「SEO自动化」页面的「设置」标签页中，找到「OpenRouter API密钥」字段并粘贴您的密钥。
           </p>
           <ul className="list-disc pl-5 space-y-2">
             <li>

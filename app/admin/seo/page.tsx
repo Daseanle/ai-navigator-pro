@@ -179,7 +179,7 @@ export default function SeoAutomationPage() {
         
         // 检查API密钥是否已设置
         const apiKeySetting = mockSettings.find(s => s.name === 'openrouter_api_key');
-        if (!apiKeySetting || !apiKeySetting.value) {
+        if (!apiKeySetting?.value) {
           setApiKeyError('请先设置OpenRouter API密钥才能生成内容');
         } else {
           setApiKeyError(null);
@@ -765,14 +765,13 @@ export default function SeoAutomationPage() {
                         <div className="mt-2 text-xs text-neutral-400">
                           <p>API密钥填写说明：</p>
                           <ul className="list-disc pl-5 mt-1 space-y-1">
-                            <li>OpenAI API密钥格式：以 sk- 开头的字符串</li>
+                            <li>OpenRouter API密钥格式：以 sk-or- 开头的字符串</li>
                             <li>可在 <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">OpenRouter平台</a> 创建API密钥</li>
                             <li>请确保API密钥有足够的额度用于内容生成</li>
                             <li>API密钥将安全加密存储，仅用于SEO内容生成</li>
                           </ul>
                         </div>
-                      </div>
-                    ) : setting.name.includes('auto_publish') ? (
+                      ) : setting.name.includes('auto_publish') ? (
                       <div className="flex items-center">
                         <label className="inline-flex items-center cursor-pointer">
                           <input

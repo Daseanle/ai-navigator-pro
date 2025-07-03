@@ -212,7 +212,7 @@ export default function ToolReviewsPage() {
                 <p className="text-sm">{error}</p>
                 <p className="text-sm mt-2">可能的解决方案:</p>
                 <ul className="list-disc list-inside text-sm">
-                  <li>检查OpenAI API密钥是否已配置</li>
+                  <li>检查OpenRouter API密钥是否已配置</li>
                   <li>确保数据库连接正常</li>
                   <li>验证工具表结构是否正确</li>
                 </ul>

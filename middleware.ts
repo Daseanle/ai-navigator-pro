@@ -1,38 +1,41 @@
-// middleware.ts
-import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
+import type { NextRequest } from 'next/server';
 
-import type { NextRequest } from 'next/server'
+// 简单的内存存储（生产环境建议使用Redis）
+const rateLimitMap = new Map();
 
-export async function middleware(req: NextRequest) {
-  const res = NextResponse.next()
-  const supabase = createMiddlewareClient({ req, res })
-  const { data: { session } } = await supabase.auth.getSession()
-  
-  // 检查是否访问管理员页面
-  const isAdminPage = req.nextUrl.pathname.startsWith('/admin')
-  
-  if (isAdminPage) {
-    // 如果没有会话，重定向到登录页面
-    if (!session) {
-      const redirectUrl = new URL('/login', req.url)
-      redirectUrl.searchParams.set('redirect', req.nextUrl.pathname)
-      return NextResponse.redirect(redirectUrl)
-    }
-    
-    // 检查用户角色是否为管理员
-    const { data: { user } } = await supabase.auth.getUser()
-    
-    // 从用户元数据中获取角色信息
-    // 注意：实际项目中，角色信息可能存储在用户元数据或单独的表中
-    const userRole = user?.user_metadata?.role || 'user'
-    
-    // 如果不是管理员，重定向到未授权页面
-    if (userRole !== 'admin') {
-      const unauthorizedUrl = new URL('/unauthorized', req.url)
-      return NextResponse.redirect(unauthorizedUrl)
+export function middleware(request: NextRequest) {
+  // 只对API路由应用速率限制
+  if (request.nextUrl.pathname.startsWith('/api/')) {
+    const ip = request.ip || request.headers.get('x-forwarded-for') || 'anonymous';
+    const now = Date.now();
+    const windowMs = 15 * 60 * 1000; // 15分钟
+    const maxRequests = 100;
+
+    if (!rateLimitMap.has(ip)) {
+      rateLimitMap.set(ip, { count: 1, resetTime: now + windowMs });
+    } else {
+      const userData = rateLimitMap.get(ip);
+      if (now > userData.resetTime) {
+        userData.count = 1;
+        userData.resetTime = now + windowMs;
+      } else {
+        userData.count++;
+        if (userData.count > maxRequests) {
+          return new NextResponse('Too Many Requests', { 
+            status: 429,
+            headers: {
+              'Retry-After': Math.ceil((userData.resetTime - now) / 1000).toString()
+            }
+          });
+        }
+      }
     }
   }
-  
-  return res
+
+  return NextResponse.next();
 }
+
+export const config = {
+  matcher: '/api/:path*'
+};
