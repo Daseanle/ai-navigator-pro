@@ -127,6 +127,13 @@ export async function generateContent(
       throw new Error('未配置OpenRouter API密钥');
     }
     
+    // 移除这部分 OpenAI API 密钥检查
+    // const openaiApiKey = process.env.OPENAI_API_KEY;
+    // if (!openaiApiKey) {
+    //   console.error('未配置OpenAI API密钥，无法生成内容');
+    //   throw new Error('未配置OpenAI API密钥');
+    // }
+    
     // 获取内容模板
     let templatesQuery = supabase
       .from('content_templates')

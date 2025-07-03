@@ -145,7 +145,7 @@ export default function SeoAutomationPage() {
             id: '1',
             name: 'openrouter_api_key',
             value: '',
-            description: 'OpenAI API密钥（用于内容生成）'
+            description: 'OpenRouter API密钥（用于内容生成）'
           },
           {
             id: '2',
@@ -180,7 +180,7 @@ export default function SeoAutomationPage() {
         // 检查API密钥是否已设置
         const apiKeySetting = mockSettings.find(s => s.name === 'openrouter_api_key');
         if (!apiKeySetting || !apiKeySetting.value) {
-          setApiKeyError('请先设置OpenAI API密钥才能生成内容');
+          setApiKeyError('请先设置OpenRouter API密钥才能生成内容');
         } else {
           setApiKeyError(null);
         }

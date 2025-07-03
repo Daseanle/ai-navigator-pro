@@ -77,19 +77,19 @@ export async function runSeoOptimization(
     // 创建Supabase客户端
     const supabase = createClient(supabaseUrl, supabaseServiceKey);
     
-    // 获取OpenAI API密钥
-    const openaiApiKey = process.env.OPENAI_API_KEY;
-    if (!openaiApiKey) {
-      console.error('未配置OpenAI API密钥，无法执行SEO优化');
-      throw new Error('未配置OpenAI API密钥');
-    }
-    
     // 获取OpenRouter API密钥
     const openrouterApiKey = process.env.OPENROUTER_API_KEY;
     if (!openrouterApiKey) {
       console.error('未配置OpenRouter API密钥，无法执行SEO优化');
       throw new Error('未配置OpenRouter API密钥');
     }
+    
+    // 移除这部分 OpenAI API 密钥检查
+    // const openaiApiKey = process.env.OPENAI_API_KEY;
+    // if (!openaiApiKey) {
+    //   console.error('未配置OpenAI API密钥，无法执行SEO优化');
+    //   throw new Error('未配置OpenAI API密钥');
+    // }
     
     // 获取需要优化的内容
     let query = supabase
