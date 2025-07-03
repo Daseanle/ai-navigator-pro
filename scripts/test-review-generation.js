@@ -2,7 +2,7 @@
  * 测试工具评测生成功能的脚本
  * 
  * 使用方法：
- * 1. 确保已配置环境变量（API_KEY, OPENAI_API_KEY等）
+ * 1. 确保已配置环境变量（API_KEY, OPENROUTER_API_KEY等）
  * 2. 运行: node scripts/test-review-generation.js
  */
 

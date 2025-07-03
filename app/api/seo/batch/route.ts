@@ -26,16 +26,16 @@ export async function POST(request: NextRequest) {
     // 解析请求体
     const requestData: BatchSeoOptimizationRequest = await request.json();
     
-    // 验证OpenAI API密钥
-    if (!process.env.OPENAI_API_KEY && !requestData.apiKey) {
-      return NextResponse.json({ error: '未配置OpenAI API密钥' }, { status: 400 });
+    // 验证OpenRouter API密钥
+    if (!process.env.OPENROUTER_API_KEY && !requestData.apiKey) {
+      return NextResponse.json({ error: '未配置OpenRouter API密钥' }, { status: 400 });
     }
     
     // 如果提供了API密钥，临时设置环境变量
     let originalApiKey;
     if (requestData.apiKey) {
-      originalApiKey = process.env.OPENAI_API_KEY;
-      process.env.OPENAI_API_KEY = requestData.apiKey;
+      originalApiKey = process.env.OPENROUTER_API_KEY;
+      process.env.OPENROUTER_API_KEY = requestData.apiKey;
     }
     
     try {
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
     } finally {
       // 恢复原始API密钥
       if (requestData.apiKey && originalApiKey !== undefined) {
-        process.env.OPENAI_API_KEY = originalApiKey;
+        process.env.OPENROUTER_API_KEY = originalApiKey;
       }
     }
   } catch (error) {

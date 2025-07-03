@@ -143,7 +143,7 @@ export default function SeoAutomationPage() {
         const mockSettings: SeoContentSettings[] = [
           {
             id: '1',
-            name: 'openai_api_key',
+            name: 'openrouter_api_key',
             value: '',
             description: 'OpenAI API密钥（用于内容生成）'
           },
@@ -178,7 +178,7 @@ export default function SeoAutomationPage() {
         setSeoSettings(mockSettings);
         
         // 检查API密钥是否已设置
-        const apiKeySetting = mockSettings.find(s => s.name === 'openai_api_key');
+        const apiKeySetting = mockSettings.find(s => s.name === 'openrouter_api_key');
         if (!apiKeySetting || !apiKeySetting.value) {
           setApiKeyError('请先设置OpenAI API密钥才能生成内容');
         } else {
@@ -477,7 +477,7 @@ export default function SeoAutomationPage() {
                             body: JSON.stringify({
                               contentTypes: ['blog', 'tool_description', 'category_page'],
                               limit: 5,
-                              apiKey: seoSettings.find(s => s.name === 'openai_api_key')?.value
+                              apiKey: seoSettings.find(s => s.name === 'openrouter_api_key')?.value
                             })
                           });
                           
@@ -553,7 +553,7 @@ export default function SeoAutomationPage() {
                             body: JSON.stringify({
                               contentTypes: ['blog', 'tool_description', 'category_page'],
                               limit: 5,
-                              apiKey: seoSettings.find(s => s.name === 'openai_api_key')?.value
+                              apiKey: seoSettings.find(s => s.name === 'openrouter_api_key')?.value
                             })
                           });
                           
@@ -766,7 +766,7 @@ export default function SeoAutomationPage() {
                           <p>API密钥填写说明：</p>
                           <ul className="list-disc pl-5 mt-1 space-y-1">
                             <li>OpenAI API密钥格式：以 sk- 开头的字符串</li>
-                            <li>可在 <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">OpenAI平台</a> 创建API密钥</li>
+                            <li>可在 <a href="https://openrouter.ai/keys" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:underline">OpenRouter平台</a> 创建API密钥</li>
                             <li>请确保API密钥有足够的额度用于内容生成</li>
                             <li>API密钥将安全加密存储，仅用于SEO内容生成</li>
                           </ul>

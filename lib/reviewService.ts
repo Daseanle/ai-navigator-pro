@@ -21,10 +21,10 @@ export async function generateToolReviews(
     console.log('🤖 开始生成工具评测...');
     
     // 获取API密钥
-    const openaiApiKey = process.env.OPENAI_API_KEY;
-    if (!openaiApiKey) {
-      console.error('未配置OpenAI API密钥，无法生成评测');
-      throw new Error('未配置OpenAI API密钥');
+    const openrouterApiKey = process.env.OPENROUTER_API_KEY;
+    if (!openrouterApiKey) {
+      console.error('未配置OpenRouter API密钥，无法生成评测');
+      throw new Error('未配置OpenRouter API密钥');
     }
     
     // 调用批量生成评测API

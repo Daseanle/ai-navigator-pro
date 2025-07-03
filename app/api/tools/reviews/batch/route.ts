@@ -23,10 +23,10 @@ export async function POST(request: NextRequest) {
     const { apiKey, categoryFilter, limit = 5, skipExisting = true } = body;
     
     // 验证API密钥
-    const validApiKey = process.env.OPENAI_API_KEY || apiKey;
+    const validApiKey = process.env.OPENROUTER_API_KEY || apiKey;
     if (!validApiKey) {
       return NextResponse.json(
-        { error: '未配置OpenAI API密钥，请在.env.local文件中添加OPENAI_API_KEY或在请求中提供apiKey' },
+        { error: '未配置OpenRouter API密钥，请在.env.local文件中添加OPENROUTER_API_KEY或在请求中提供apiKey' },
         { status: 401 }
       );
     }

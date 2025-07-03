@@ -120,6 +120,13 @@ export async function generateContent(
       throw new Error('未配置OpenAI API密钥');
     }
     
+    // 获取OpenRouter API密钥
+    const openrouterApiKey = process.env.OPENROUTER_API_KEY;
+    if (!openrouterApiKey) {
+      console.error('未配置OpenRouter API密钥，无法生成内容');
+      throw new Error('未配置OpenRouter API密钥');
+    }
+    
     // 获取内容模板
     let templatesQuery = supabase
       .from('content_templates')
@@ -188,7 +195,7 @@ export async function generateContent(
             template_content: template.template,
             keywords: template.keywords,
             target_type: template.target_type,
-            apiKey: openaiApiKey
+            apiKey: openrouterApiKey
           })
         });
         

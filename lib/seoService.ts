@@ -84,6 +84,13 @@ export async function runSeoOptimization(
       throw new Error('未配置OpenAI API密钥');
     }
     
+    // 获取OpenRouter API密钥
+    const openrouterApiKey = process.env.OPENROUTER_API_KEY;
+    if (!openrouterApiKey) {
+      console.error('未配置OpenRouter API密钥，无法执行SEO优化');
+      throw new Error('未配置OpenRouter API密钥');
+    }
+    
     // 获取需要优化的内容
     let query = supabase
       .from('generated_content')
@@ -157,7 +164,7 @@ export async function runSeoOptimization(
             content_body: content.content,
             content_url: content.target_url,
             keywords: content.keywords,
-            apiKey: openaiApiKey
+            apiKey: openrouterApiKey
           })
         });
         

@@ -67,7 +67,7 @@ export default function SettingsPage() {
           },
           {
             id: '5',
-            name: 'openai_api_key',
+            name: 'openrouter_api_key',
             value: 'sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
             description: 'OpenAI API密钥',
             category: 'api',
