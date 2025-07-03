@@ -215,16 +215,16 @@ async function addToolToDatabase(tool: Omit<Tool, 'id'> & { pricing: string }): 
 // 自动同步工具的主函数
 export async function syncExternalTools(): Promise<{
   added: number;
-  skipped: number;let externalTools: any[] = [];
+  skipped: number;
   errors: number;
 }> {
+  let externalTools: any[] = [];
+  
   const result = {
     added: 0,
     skipped: 0,
     errors: 0
-  externalTools = await fetchExternalTools();};
-  
-  let externalTools: any[] = []; // 在函数开始时声明变量
+  };
   
   try {
     // 1. 获取外部工具数据

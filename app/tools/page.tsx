@@ -1,13 +1,14 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useSearchParams } from 'next/navigation';
 import ToolCard from '@/components/ToolCard';
 import { Search, Filter, ChevronDown, ArrowUpDown, ArrowUp, ArrowDown, Tag, X, ChevronLeft, ChevronRight } from 'lucide-react';
 import type { ToolDetail } from '@/types';
 
-export default function ToolsPage() {
+// 将使用 useSearchParams 的逻辑提取到单独的组件中
+function ToolsContent() {
   const [tools, setTools] = useState<Partial<ToolDetail>[]>([]);
   const [filteredTools, setFilteredTools] = useState<Partial<ToolDetail>[]>([]);
   const [paginatedTools, setPaginatedTools] = useState<Partial<ToolDetail>[]>([]);
@@ -763,5 +764,28 @@ export default function ToolsPage() {
         </div>
       </div>
     </div>
+  );
+}
+
+// 加载组件
+function ToolsPageFallback() {
+  return (
+    <div className="min-h-screen bg-black text-white">
+      <div className="container mx-auto px-4 py-8">
+        <div className="text-center py-12">
+          <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-blue-500 border-r-transparent"></div>
+          <p className="mt-4 text-neutral-400">正在加载工具...</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 主页面组件
+export default function ToolsPage() {
+  return (
+    <Suspense fallback={<ToolsPageFallback />}>
+      <ToolsContent />
+    </Suspense>
   );
 }

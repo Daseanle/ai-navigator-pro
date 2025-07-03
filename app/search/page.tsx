@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { Search, X, Loader2 } from 'lucide-react';
@@ -17,7 +17,8 @@ type SearchResult = {
   tags: { name: string }[];
 };
 
-export default function SearchPage() {
+// 将使用 useSearchParams 的逻辑提取到单独的组件中
+function SearchContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const supabase = createClientComponentClient();
@@ -200,5 +201,26 @@ export default function SearchPage() {
         )}
       </div>
     </div>
+  );
+}
+
+// 加载组件
+function SearchPageFallback() {
+  return (
+    <div className="max-w-5xl mx-auto px-4 py-12">
+      <h1 className="text-3xl font-bold text-white mb-8 text-center">搜索 AI 工具</h1>
+      <div className="flex justify-center py-20">
+        <Loader2 className="animate-spin text-blue-500" size={40} />
+      </div>
+    </div>
+  );
+}
+
+// 主页面组件
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<SearchPageFallback />}>
+      <SearchContent />
+    </Suspense>
   );
 }
