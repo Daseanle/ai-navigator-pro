@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabaseClient';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import ToolCard from '@/components/ToolCard';
 
 // --- 类型定义 ---
@@ -20,16 +21,16 @@ type Category = {
 
 // --- 获取所有分类 ---
 export async function generateStaticParams() {
-  // 使用与CategoryList相同的分类数据
+  // 使用与 CategoryList 相同的模拟数据
   const categories = [
-    { slug: 'chatbots' },
-    { slug: 'image-generation' },
-    { slug: 'text-processing' },
-    { slug: 'code-assistants' },
-    { slug: 'audio-processing' },
-    { slug: 'video-generation' },
+    { slug: 'chatbots', name: '聊天机器人' },
+    { slug: 'image-generation', name: '图像生成' },
+    { slug: 'text-processing', name: '文本处理' },
+    { slug: 'code-assistants', name: '代码助手' },
+    { slug: 'audio-processing', name: '音频处理' },
+    { slug: 'video-generation', name: '视频生成' }
   ];
-
+  
   return categories.map((category) => ({
     category: category.slug,
   }));
@@ -107,7 +108,7 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
           {tools.map(tool => (
             <ToolCard
               key={tool.id}
-              id={tool.id}  // 删除 .toString()
+              id={tool.id}
               slug={tool.slug}
               name={tool.name}
               tagline={tool.tagline}
@@ -122,17 +123,12 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 }
 
 // --- SEO 元数据 ---
-export async function generateMetadata({ params }: { params: Promise<{ category: string }> }) {
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
   const resolvedParams = await params;
-  const categorySlug = resolvedParams.category;
-  const category = await getCategoryInfo(categorySlug);
-  
-  if (!category) {
-    return { title: 'Category Not Found' };
-  }
+  const categoryInfo = await getCategoryInfo(resolvedParams.category);
   
   return {
-    title: `${category.name} AI 工具 | AI Navigator Pro`,
-    description: category.description,
+    title: `${categoryInfo?.name || '分类'} - AI Navigator Pro`,
+    description: `探索 ${categoryInfo?.name || '该分类'} 相关的AI工具和资源`
   };
 }
