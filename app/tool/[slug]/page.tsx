@@ -129,7 +129,7 @@ function CommentList({ comments }: { comments: CommentType[] }) {
 }
 
 // --- 页面主组件 ---
-export default function ToolDetailPage({ params }: { params: { slug: string } }) {
+export default function ToolDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const [tool, setTool] = useState<ToolDetail | null>(null);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<User | null>(null);
@@ -154,8 +154,9 @@ export default function ToolDetailPage({ params }: { params: { slug: string } })
   useEffect(() => {
     async function getToolData() {
       setLoading(true);
-      // 直接使用 params.slug
-      const toolSlug = params.slug;
+      // 解析 params Promise 获取 slug
+      const resolvedParams = await params;
+      const toolSlug = resolvedParams.slug;
       
       const { data, error } = await supabase
         .from('tools')

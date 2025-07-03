@@ -76,9 +76,10 @@ async function getCategoryTools(categorySlug: string): Promise<Tool[]> {
 }
 
 // --- 页面组件 ---
-export default async function CategoryPage({ params }: { params: { category: string } }) {
-  // 直接使用 params.category
-  const categorySlug = params.category;
+export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
+  // 等待 params 解析完成
+  const resolvedParams = await params;
+  const categorySlug = resolvedParams.category;
   
   const category = await getCategoryInfo(categorySlug);
   
@@ -122,8 +123,9 @@ export default async function CategoryPage({ params }: { params: { category: str
 }
 
 // --- SEO 元数据 ---
-export async function generateMetadata({ params }: { params: { category: string } }): Promise<Metadata> {
-  const categoryInfo = await getCategoryInfo(params.category);
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
+  const resolvedParams = await params;
+  const categoryInfo = await getCategoryInfo(resolvedParams.category);
   
   return {
     title: `${categoryInfo?.name || '分类'} - AI Navigator Pro`,
