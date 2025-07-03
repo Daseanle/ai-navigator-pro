@@ -3,10 +3,13 @@
 
 import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import { useEffect, useState } from 'react';
-import type { User } from '@supabase/supabase-js';
+import { User, ChevronDown } from 'lucide-react';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
+import Link from 'next/link';
 
 export default function AppHeader() {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
+  const [showDropdown, setShowDropdown] = useState(false);
   const supabase = createClientComponentClient();
 
   useEffect(() => {
@@ -14,7 +17,6 @@ export default function AppHeader() {
       setUser(session?.user ?? null);
     });
 
-    // 首次加载时获取当前用户
     const getCurrentUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
       setUser(user);
@@ -26,31 +28,58 @@ export default function AppHeader() {
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    // 页面会自动刷新或通过onAuthStateChange更新状态
+    setShowDropdown(false);
   };
 
   return (
-    <header className="border-b border-neutral-800">
+    <header className="border-b border-neutral-800 sticky top-0 bg-black/95 backdrop-blur-sm z-50">
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a href="/" className="text-2xl font-bold text-white">AI Navigator Pro</a>
+        <Link href="/" className="text-2xl font-bold text-white hover:text-blue-400 transition-colors">
+          AI Navigator Pro
+        </Link>
+        
         <div className="hidden md:flex items-center space-x-6">
-          <a href="/tools" className="text-neutral-300 hover:text-white transition-colors">Tools</a>
-          <a href="/blog" className="text-neutral-300 hover:text-white transition-colors">Blog</a>
-          <a href="#" className="text-neutral-300 hover:text-white transition-colors">Solutions</a>
-          <a href="#" className="text-neutral-300 hover:text-white transition-colors">Reviews</a>
+          <Link href="/tools" className="text-neutral-300 hover:text-white transition-colors">工具库</Link>
+          <Link href="/search" className="text-neutral-300 hover:text-white transition-colors">搜索</Link>
+          <Link href="/blog" className="text-neutral-300 hover:text-white transition-colors">博客</Link>
+          <Link href="/about" className="text-neutral-300 hover:text-white transition-colors">关于</Link>
         </div>
-        <div>
+        
+        <div className="relative">
           {user ? (
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-neutral-400">{user.email}</span>
-              <button onClick={handleLogout} className="px-4 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors">
-                Logout
+            <div className="relative">
+              <button 
+                onClick={() => setShowDropdown(!showDropdown)}
+                className="flex items-center gap-2 p-2 rounded-lg hover:bg-neutral-800 transition-colors"
+              >
+                <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                  {user.email?.charAt(0).toUpperCase()}
+                </div>
+                <ChevronDown size={16} className="text-neutral-400" />
               </button>
+              
+              {showDropdown && (
+                <div className="absolute right-0 mt-2 w-48 bg-neutral-900 border border-neutral-800 rounded-lg shadow-xl py-2 z-50">
+                  <Link href="/profile" className="block px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800 hover:text-white">
+                    个人资料
+                  </Link>
+                  <Link href="/favorites" className="block px-4 py-2 text-sm text-neutral-300 hover:bg-neutral-800 hover:text-white">
+                    我的收藏
+                  </Link>
+                  <hr className="my-2 border-neutral-800" />
+                  <button 
+                    onClick={handleLogout}
+                    className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-neutral-800"
+                  >
+                    退出登录
+                  </button>
+                </div>
+              )}
             </div>
           ) : (
-            <a href="/login" className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
-              Login
-            </a>
+            <Link href="/login" className="px-5 py-2.5 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors">
+              登录
+            </Link>
           )}
         </div>
       </nav>
