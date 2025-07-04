@@ -1,9 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // PWA 配置
-  experimental: {
-    appDir: true,
-  },
+  // 移除过时的 experimental.appDir 配置
   // 图片优化
   images: {
     domains: ['supabase.co', 'your-cdn-domain.com'],

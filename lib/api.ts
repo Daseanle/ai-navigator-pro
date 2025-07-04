@@ -2,7 +2,7 @@ import { supabase } from './supabaseClient';
 
 // --- 类型定义 ---
 export type Tool = {
-  id: number;
+  id: string;  // 改为string类型以匹配UUID
   slug: string;
   name: string;
   tagline: string;
