@@ -15,50 +15,25 @@ export default function HelpPage() {
       content: (
         <div className="space-y-4">
           <p>
-            AI Navigator Pro 使用基于角色的权限系统，确保只有授权用户才能访问管理功能。
+            用户权限管理功能允许管理员控制不同用户对系统功能的访问权限。
           </p>
           
-          <h3 className="text-lg font-medium text-white mt-4">权限级别</h3>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>
-              <span className="font-medium text-white">管理员 (admin)</span>：
-              <p>拥有完全访问权限，可以管理所有系统功能，包括用户管理、SEO设置、系统配置等。</p>
-            </li>
-            <li>
-              <span className="font-medium text-white">编辑者 (editor)</span>：
-              <p>可以管理内容，但无法更改系统设置或管理用户。</p>
-            </li>
-            <li>
-              <span className="font-medium text-white">普通用户 (user)</span>：
-              <p>只能访问前台功能，无法访问任何管理页面。</p>
-            </li>
+          <h3 className="text-lg font-medium text-white mt-4">主要功能</h3>
+          <ul className="list-disc pl-5 mt-2 text-gray-300">
+            <li>创建和管理用户角色</li>
+            <li>为角色分配权限</li>
+            <li>查看用户权限</li>
+            <li>修改用户角色</li>
           </ul>
           
-          <h3 className="text-lg font-medium text-white mt-4">"User not allowed" 错误说明</h3>
-          <p>
-            当您看到 "User not allowed" 提示时，表示您的账户没有访问当前页面的权限。这通常是因为：
-          </p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>您的账户角色不是管理员</li>
-            <li>您的账户权限不足以执行特定操作</li>
-            <li>系统管理员尚未为您分配适当的权限</li>
-          </ul>
-          
-          <h3 className="text-lg font-medium text-white mt-4">如何获取权限</h3>
-          <p>
-            如需获取更高级别的权限，请联系系统管理员。管理员可以在用户管理页面更改您的角色。
-          </p>
-          
-          <h3 className="text-lg font-medium text-white mt-4">如何管理用户权限</h3>
-          <p>
-            作为管理员，您可以通过以下步骤管理用户权限：
-          </p>
-          <ol className="list-decimal pl-5 space-y-2">
-            <li>导航到「用户管理」页面</li>
-            <li>找到需要修改权限的用户</li>
-            <li>点击「编辑」按钮</li>
-            <li>在角色下拉菜单中选择适当的角色</li>
-            <li>点击「保存更改」完成操作</li>
+          <h3 className="text-lg font-medium text-white mt-4">操作步骤</h3>
+          <ol className="list-decimal pl-5 mt-2 text-gray-300">
+            <li>进入「用户管理」页面</li>
+            <li>点击「角色管理」标签</li>
+            <li>点击「新建角色」按钮</li>
+            <li>填写角色名称和描述</li>
+            <li>勾选需要的权限</li>
+            <li>点击「保存」按钮</li>
           </ol>
         </div>
       ),
@@ -78,60 +53,20 @@ export default function HelpPage() {
           </p>
           
           <h4 className="text-md font-medium text-white mt-3">获取API密钥：</h4>
-          <ol className="list-decimal list-inside text-gray-300 mt-2 space-y-1">
-            <li>访问 <a href="https://openrouter.ai" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">OpenRouter平台</a> 并创建账户</li>
-            <li>登录后，前往API密钥页面</li>
-            <li>点击"创建新密钥"按钮</li>
-            <li>为密钥设置一个描述性名称</li>
-            <li>复制生成的API密钥（以 sk-or- 开头）</li>
+          <ol className="list-decimal pl-5 mt-2 text-gray-300">
+            <li>访问 OpenRouter 网站 (https://openrouter.ai)</li>
+            <li>登录或注册账户</li>
+            <li>在仪表板中找到 API 密钥</li>
+            <li>复制 API 密钥并保存在安全的地方</li>
           </ol>
           
-          <h4 className="text-md font-medium text-white mt-3">配置密钥：</h4>
-          <p className="text-gray-300 mt-2">
-          <ul className="list-disc pl-5 space-y-2">
-            <li>
-              <span className="font-medium text-white">获取方式</span>：
-              <ol className="list-decimal pl-5 mt-2 space-y-1">
-                <li>访问 <a href="https://openrouter.ai" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">OpenRouter平台</a> 并创建账户</li>
-              </ol>
-              <p className="mt-4">获取API密钥步骤：</p>
-              <ol className="list-decimal list-inside mt-2">
-                <li>登录 OpenRouter 平台</li>
-                <li>在控制台中找到您的 API 密钥</li>
-                <li>复制生成的密钥</li>
-              </ol>
-              <p className="mt-4">在「SEO自动化」页面的「设置」标签页中，找到「OpenRouter API密钥」字段并粘贴您的密钥。</p>
-            </li>
-            <li>
-              <span className="font-medium text-white">注意事项</span>：
-              <ul className="list-disc pl-5 mt-2 space-y-1">
-                <li>API密钥会产生费用，请妥善保管</li>
-                <li>建议设置使用限额，避免意外超支</li>
-                <li>系统会加密存储您的API密钥</li>
-              </ul>
-            </li>
-          </ul>
-          
-          <h3 className="text-lg font-medium text-white mt-4">Google Search Console API</h3>
-          <p>
-            此API用于获取SEO内容的展示和点击数据，帮助分析内容性能。
-          </p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>
-              <span className="font-medium text-white">获取方式</span>：
-              <ol className="list-decimal pl-5 mt-2 space-y-1">
-                <li>访问 <a href="https://console.developers.google.com/" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">Google Cloud Console</a></li>
-                <li>创建新项目或选择现有项目</li>
-                <li>启用 Search Console API</li>
-                <li>创建服务账号和密钥</li>
-                <li>下载JSON格式的密钥文件</li>
-              </ol>
-            </li>
-            <li>
-              <span className="font-medium text-white">填写位置</span>：
-              <p>在「SEO自动化」页面的「设置」标签页中，找到「Google Search Console API密钥」字段，并粘贴JSON密钥的内容。</p>
-            </li>
-          </ul>
+          <h4 className="text-md font-medium text-white mt-3">在AI Navigator Pro中设置API密钥：</h4>
+          <ol className="list-decimal pl-5 mt-2 text-gray-300">
+            <li>进入设置页面</li>
+            <li>找到「API密钥」部分</li>
+            <li>粘贴您的 OpenRouter API 密钥</li>
+            <li>点击「保存更改」完成设置</li>
+          </ol>
         </div>
       ),
     },
@@ -141,25 +76,15 @@ export default function HelpPage() {
       content: (
         <div className="space-y-4">
           <p>
-            SEO自动化功能可以帮助您自动生成优质内容，提高网站在搜索引擎中的可见性和排名。
+            SEO自动化功能帮助您自动管理网站的SEO内容，包括元标签、标题和描述的生成。
           </p>
           
-          <h3 className="text-lg font-medium text-white mt-4">内容模板</h3>
-          <p>
-            内容模板是自动生成SEO内容的基础。您可以创建多个模板，针对不同类型的内容。
-          </p>
-          <ul className="list-disc pl-5 space-y-2">
-            <li>
-              <span className="font-medium text-white">创建模板</span>：
-              <ol className="list-decimal pl-5 mt-2 space-y-1">
-                <li>在「SEO自动化」页面，切换到「内容模板」标签</li>
-                <li>点击「创建模板」按钮</li>
-                <li>填写模板名称、目标类型、关键词等信息</li>
-                <li>编写模板内容，使用 {'{{'} 变量名 {'}}' } 语法添加动态内容</li>
-                <li>设置生成频率和状态</li>
-                <li>点击「创建模板」保存</li>
-              </ol>
-            </li>
+          <h3 className="text-lg font-medium text-white mt-4">主要功能</h3>
+          <ul className="list-disc pl-5 mt-2 text-gray-300">
+            <li>自动生成SEO标题和描述</li>
+            <li>批量生成元标签</li>
+            <li>关键词优化建议</li>
+            <li>内容质量分析</li>
             <li>
               <span className="font-medium text-white">模板变量</span>：
               <ul className="list-disc pl-5 mt-2 space-y-1">
