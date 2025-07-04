@@ -1,8 +1,6 @@
 'use client';
 
 import { useState, useEffect, useMemo, FormEvent } from 'react';
-
-type TabValue = 'templates' | 'content' | 'settings';
 import { supabase } from '@/lib/supabaseClient';
 import { Plus, X, Check, XCircle, Loader2, Search, Trash2, Edit2, FileText, Clock, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -12,6 +10,8 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { Modal } from '@/components/ui/modal';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
+
+type TabValue = 'templates' | 'content' | 'settings';
 
 interface ContentTemplate {
   id: string;
@@ -393,7 +393,10 @@ export default function SeoContentAutomation() {
 
       <Modal
         isOpen={showTemplateModal}
-        onClose={() => setShowTemplateModal(false)}
+        onClose={() => {
+          setShowTemplateModal(false);
+          setCurrentTemplate(null);
+        }}
       >
         <div className="bg-gray-800 p-6 rounded-lg">
           <h2 className="text-xl font-semibold text-white mb-4">
@@ -426,9 +429,25 @@ export default function SeoContentAutomation() {
                   }
                 }}
                 required
-                rows={4}
               />
             </div>
+
+            {currentTemplate?.id && (
+              <div className="mt-4 space-y-2">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-4 h-4 text-blue-500" />
+                  <span className="text-gray-300">模板 ID: {currentTemplate.id}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-blue-500" />
+                  <span className="text-gray-300">创建于: {currentTemplate.created_at}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <RefreshCw className="w-4 h-4 text-blue-500" />
+                  <span className="text-gray-300">状态: {currentTemplate.status}</span>
+                </div>
+              </div>
+            )}
 
             <div>
               <Label htmlFor="target_type">目标类型</Label>
@@ -439,14 +458,16 @@ export default function SeoContentAutomation() {
                     setCurrentTemplate({ ...currentTemplate, target_type: value });
                   }
                 }}
+                required
               >
                 <SelectTrigger>
                   <SelectValue placeholder="选择目标类型" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="article">文章</SelectItem>
-                  <SelectItem value="product">产品</SelectItem>
-                  <SelectItem value="page">页面</SelectItem>
+                  <SelectItem value="blog">博客</SelectItem>
+                  <SelectItem value="product">产品描述</SelectItem>
+                  <SelectItem value="faq">常见问题</SelectItem>
                 </SelectContent>
               </Select>
             </div>
