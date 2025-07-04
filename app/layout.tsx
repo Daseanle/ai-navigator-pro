@@ -1,11 +1,15 @@
 import './globals.css'
-import { Inter } from 'next/font/google'
+// 注释掉Google Fonts导入
+// import { Inter } from 'next/font/google'
 import AppHeader from '@/components/AppHeader'
 import AppFooter from '@/components/AppFooter'
 import PWAInstaller from '@/components/PWAInstaller'
 import MobileNavigation from '@/components/MobileNavigation'
 
-const inter = Inter({ subsets: ['latin'] })
+// 使用系统字体
+const inter = {
+  className: 'font-sans'
+}
 
 // 分离 metadata 和 viewport
 export const metadata = {

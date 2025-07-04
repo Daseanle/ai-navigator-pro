@@ -1,7 +1,12 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  // 移除过时的 experimental.appDir 配置
-  // 图片优化
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+  disable: process.env.NODE_ENV === 'development'
+});
+
+module.exports = withPWA({
+  // 移除 experimental.appDir 配置
   images: {
     domains: ['supabase.co', 'your-cdn-domain.com'],
     formats: ['image/webp', 'image/avif'],
@@ -36,6 +41,4 @@ const nextConfig = {
       },
     ];
   },
-};
-
-module.exports = nextConfig;
+});
