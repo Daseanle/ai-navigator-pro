@@ -16,10 +16,14 @@ jobs:
         with:
           node-version: '18'
           cache: 'npm'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run type-check
-      - run: npm run build
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Lint
+        run: npm run lint
+      - name: Run Type Check
+        run: npm run type-check
+      - name: Build Project
+        run: npm run build
 
   deploy:
     needs: test
@@ -34,3 +38,4 @@ jobs:
           vercel-org-id: ${{ secrets.ORG_ID }}
           vercel-project-id: ${{ secrets.PROJECT_ID }}
           vercel-args: '--prod'
+          github-token: ${{ secrets.GITHUB_TOKEN }}

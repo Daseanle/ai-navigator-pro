@@ -88,22 +88,19 @@ export default function HelpPage() {
           
           <h4 className="text-md font-medium text-white mt-3">配置密钥：</h4>
           <p className="text-gray-300 mt-2">
-            在「SEO自动化」页面的「设置」标签页中，找到「OpenRouter API密钥」字段并粘贴您的密钥。
-          </p>
           <ul className="list-disc pl-5 space-y-2">
             <li>
               <span className="font-medium text-white">获取方式</span>：
               <ol className="list-decimal pl-5 mt-2 space-y-1">
-                <li>访问 <a href="https://platform.openai.com/signup" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">OpenAI平台</a> 并创建账户</li>
-                <li>登录后，导航到 API 密钥页面</li>
-                <li>点击「创建新密钥」按钮</li>
-                <li>为密钥添加描述（例如："AI Navigator Pro"）</li>
-                <li>复制生成的密钥（以 sk- 开头）</li>
+                <li>访问 <a href="https://openrouter.ai" className="text-blue-400 hover:underline" target="_blank" rel="noopener noreferrer">OpenRouter平台</a> 并创建账户</li>
               </ol>
-            </li>
-            <li>
-              <span className="font-medium text-white">填写位置</span>：
-              <p>在「SEO自动化」页面的「设置」标签页中，找到「OpenAI API密钥」字段并粘贴您的密钥。</p>
+              <p className="mt-4">获取API密钥步骤：</p>
+              <ol className="list-decimal list-inside mt-2">
+                <li>登录 OpenRouter 平台</li>
+                <li>在控制台中找到您的 API 密钥</li>
+                <li>复制生成的密钥</li>
+              </ol>
+              <p className="mt-4">在「SEO自动化」页面的「设置」标签页中，找到「OpenRouter API密钥」字段并粘贴您的密钥。</p>
             </li>
             <li>
               <span className="font-medium text-white">注意事项</span>：
