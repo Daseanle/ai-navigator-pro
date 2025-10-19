@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* [Apple Style] 定义带有微妙渐变的深灰色背景 */
+body {
+  background-color: #1d1d1f; /* 苹果官网常用的深空灰色 */
+  color: rgba(255, 255, 255, 0.8); /* 默认文字使用80%透明度的白色 */
+}
+
+/* 自定义动画 */
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(-10px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-10px); }
+}
+
+.animate-fade-in-out {
+  animation: fadeInOut 3s ease-in-out;
+}
+
+@keyframes fadeInDown {
+  0% { opacity: 0; transform: translateY(-10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.3s ease-in-out forwards;
+}

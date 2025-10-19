@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <rect width="100" height="100" rx="10" fill="#f5f5f5"/>
+  <rect x="10" y="10" width="80" height="80" rx="5" fill="white" stroke="#ddd" stroke-width="2"/>
+  
+  <!-- Header -->
+  <rect x="15" y="15" width="70" height="10" rx="2" fill="#10a37f"/>
+  <text x="25" y="22" font-family="Arial" font-size="6" fill="white">GPT Store</text>
+  
+  <!-- Plugin cards -->
+  <rect x="15" y="30" width="20" height="20" rx="3" fill="#e9f5f2" stroke="#10a37f" stroke-width="1"/>
+  <rect x="40" y="30" width="20" height="20" rx="3" fill="#e9f5f2" stroke="#10a37f" stroke-width="1"/>
+  <rect x="65" y="30" width="20" height="20" rx="3" fill="#e9f5f2" stroke="#10a37f" stroke-width="1"/>
+  
+  <rect x="15" y="55" width="20" height="20" rx="3" fill="#e9f5f2" stroke="#10a37f" stroke-width="1"/>
+  <rect x="40" y="55" width="20" height="20" rx="3" fill="#e9f5f2" stroke="#10a37f" stroke-width="1"/>
+  <rect x="65" y="55" width="20" height="20" rx="3" fill="#e9f5f2" stroke="#10a37f" stroke-width="1"/>
+  
+  <!-- Plugin icons (simplified) -->
+  <circle cx="25" cy="35" r="3" fill="#10a37f"/>
+  <circle cx="50" cy="35" r="3" fill="#ff6b6b"/>
+  <circle cx="75" cy="35" r="3" fill="#feca57"/>
+  
+  <circle cx="25" cy="60" r="3" fill="#1dd1a1"/>
+  <circle cx="50" cy="60" r="3" fill="#5f27cd"/>
+  <circle cx="75" cy="60" r="3" fill="#54a0ff"/>
+  
+  <!-- Plugin names -->
+  <rect x="20" y="42" width="10" height="2" rx="1" fill="#333"/>
+  <rect x="45" y="42" width="10" height="2" rx="1" fill="#333"/>
+  <rect x="70" y="42" width="10" height="2" rx="1" fill="#333"/>
+  
+  <rect x="20" y="67" width="10" height="2" rx="1" fill="#333"/>
+  <rect x="45" y="67" width="10" height="2" rx="1" fill="#333"/>
+  <rect x="70" y="67" width="10" height="2" rx="1" fill="#333"/>
+</svg>
